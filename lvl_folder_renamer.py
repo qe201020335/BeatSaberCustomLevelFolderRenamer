@@ -3,7 +3,7 @@ import os
 import string
 from typing import Dict, List
 
-MAIN_FOLDER = 'test_folder'
+MAIN_FOLDER = 'CustomLevels'
 
 
 def load_info(level_folder: str) -> Dict:
