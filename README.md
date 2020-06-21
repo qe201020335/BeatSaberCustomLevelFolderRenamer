@@ -1,7 +1,5 @@
 # Beat Saber Costom Level Folder Renamer
-A simple program that renames the folders of custom levels in Beat Saber to the level's name and author.
-
-Comments and docs in the code will be done soon.
+A simple program that renames the folders of custom levels in Beat Saber to the level's name and author. Level infomation is read from the 'info.dat' file of a custom level.
 
 
 ## HOW TO USE
