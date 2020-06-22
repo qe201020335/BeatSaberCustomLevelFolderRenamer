@@ -11,6 +11,8 @@ SUFFIX = '_levelAuthorName'
 
 CONNECT = '-'  # This is used to connect prefix and suffix
 
+FORCED = False
+
 
 def load_info(level_folder: str) -> Dict:
     """Return the information of the custom level in <level_folder>."""
@@ -30,30 +32,41 @@ def load_folders() -> List[str]:
     return dirs
 
 
-def rename(level_folder: str) -> None:
+def rename(level_folder: str) -> int:
     """Rename a custom level folder to the correct name."""
     prefix = load_info(level_folder)[PREFIX].strip()
     suffix = load_info(level_folder)[SUFFIX].strip()
     prefix = prefix.translate(str.maketrans('', '', string.punctuation))
     suffix = suffix.translate(str.maketrans('', '', string.punctuation))
-    new_name = f'{prefix} {CONNECT} {suffix}'
-    os.rename(MAIN_FOLDER + f'/{level_folder}',
-              MAIN_FOLDER + f'/{new_name}')
-    print(f"'{level_folder}' is renamed to '{new_name}'.")
+    new_name = f'{prefix} {CONNECT} {suffix}'.strip()
+    if new_name != level_folder or FORCED:
+        os.rename(MAIN_FOLDER + f'/{level_folder}',
+                  MAIN_FOLDER + f'/{new_name}')
+        print(f"'{level_folder}' is renamed to '{new_name}'.")
+        return 1
+    return 0
 
 
-if __name__ == '__main__':
+def main() -> None:
+    """Main function."""
     print(f"Directories in '{MAIN_FOLDER}' will be automatically renamed.")
+    print('Forced rename is', FORCED)
     choice = input('Please confirm. [Y/N]').lower()
+    processed = 0
+    renamed = 0
     if choice == 'y':
         print('')
         for folder in load_folders():
-            rename(folder)
+            renamed += rename(folder)
+            processed += 1
         print('')
-        print(f"Directories in '{MAIN_FOLDER}' were renamed successfully.")
         print('Process done.')
     else:
         print("Process aborted.")
+    print(f'{processed} directories processed, {renamed} renamed.')
     print('\a')
     os.system("pause")
 
+
+if __name__ == '__main__':
+    main()
