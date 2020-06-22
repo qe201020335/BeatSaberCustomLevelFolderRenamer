@@ -3,10 +3,17 @@ import os
 import string
 from typing import Dict, List
 
-MAIN_FOLDER = 'CustomLevels'
+MAIN_FOLDER = 'CustomLevels'  # Change this if you are using other folders.
+
+# Change these to use different keys in info.dat
+PREFIX = '_songName'
+SUFFIX = '_levelAuthorName'
+
+CONNECT = '-'  # This is used to connect prefix and suffix
 
 
 def load_info(level_folder: str) -> Dict:
+    """Return the information of the custom level in <level_folder>."""
     info_file = open(MAIN_FOLDER + f'/{level_folder}/info.dat')
     info = json.load(info_file)
     info_file.close()
@@ -14,6 +21,7 @@ def load_info(level_folder: str) -> Dict:
 
 
 def load_folders() -> List[str]:
+    """Return all direct subfolders in <MAIN_FOLDER>"""
     things = os.listdir(MAIN_FOLDER)
     dirs = []
     for thing in things:
@@ -23,11 +31,12 @@ def load_folders() -> List[str]:
 
 
 def rename(level_folder: str) -> None:
-    lvl_name = load_info(level_folder)['_songName'].strip().\
-        translate(str.maketrans('', '', string.punctuation))
-    lvl_author = load_info(level_folder)['_levelAuthorName'].strip().\
-        translate(str.maketrans('', '', string.punctuation))
-    new_name = f'{lvl_name} - {lvl_author}'
+    """Rename a custom level folder to the correct name."""
+    prefix = load_info(level_folder)[PREFIX].strip()
+    suffix = load_info(level_folder)[SUFFIX].strip()
+    prefix = prefix.translate(str.maketrans('', '', string.punctuation))
+    suffix = suffix.translate(str.maketrans('', '', string.punctuation))
+    new_name = f'{prefix} {CONNECT} {suffix}'
     os.rename(MAIN_FOLDER + f'/{level_folder}',
               MAIN_FOLDER + f'/{new_name}')
     print(f"'{level_folder}' is renamed to '{new_name}'.")
