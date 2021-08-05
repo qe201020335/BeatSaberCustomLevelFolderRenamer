@@ -1,8 +1,10 @@
+# This is old and bad. Please use a new tool [here](https://github.com/qe201020335/BeatSaverZipRenamer)
+
 # Beat Saber Custom Level Folder Renamer
 A simple program that renames the folders of custom levels in Beat Saber to the level's name and author.  
 Level information is read from the 'info.dat' file of a custom level.
 
-Custom levels downloaded from beatsaver would usually have a uid name such as  
+Custom levels downloaded from beatsaver would usually have a hash name such as  
 fd7e25c79800d792a177ebbbf6930599dfb369e6  
 This program will fix it.
 
